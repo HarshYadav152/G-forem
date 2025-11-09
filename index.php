@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>G-Discuss! -- Tech Community</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Limelight&family=National+Park:wght@200..800&family=Playwrite+DE+Grund:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "National Park", sans-serif!important;
+            font-optical-sizing: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <?php include "./partials/_dbconnect.php" ?>
+    <?php include "./partials/_header.php" ?>
+
+    <div class="container-fluid">
+        <h1 class="text-center m-2 text">Welcome to G-discuss | A tech community forums</h1>
+
+        <!-- Categories start here -->
+        <div class="container">
+            <div class="row">
+
+                <!-- Fetch all categories from database -->
+                <?php
+                $sql = "SELECT * FROM `categories`";
+                $result = mysqli_query($conn, $sql);
+
+                // <!--  iterate through loop in categories -->
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<div class="col-md-3 my-2">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="./public/' . $row["category_name"] . '.jpg' . '" class="figure-img img-fluid rounded" alt="category-image">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="/forumsapplication/forumslist.php?cid=' . $row["category_id"] . '">' . $row["category_name"] . '</a></h5>
+                                        <p class="fs-6 lh-sm bg-info-subtle rounded p-2">' . substr($row["category_description"], 0, 100) . ' ...</p>
+                                        <a href="/forumsapplication/forumslist.php?cid=' . $row["category_id"] . '"class="btn btn-warning">view threads</a>
+                                    </div>
+                                </div>
+                            </div>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php include "./partials/_footer.php" ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>
